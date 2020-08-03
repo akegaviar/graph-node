@@ -14,6 +14,7 @@ use std::iter;
 use std::sync::RwLock;
 use std::time::Instant;
 
+use graph::data::graphql::*;
 use graph::prelude::*;
 
 use crate::introspection::{
@@ -244,6 +245,17 @@ pub(crate) fn get_field<'a>(
         sast::get_field(object_type, name).cloned()
     } else {
         sast::get_field(object_type, name).cloned()
+    }
+}
+
+pub(crate) fn object_or_interface<'a>(
+    schema: &'a s::Document,
+    name: &Name,
+) -> Option<ObjectOrInterface<'a>> {
+    if name.starts_with("__") {
+        INTROSPECTION_DOCUMENT.object_or_interface(name)
+    } else {
+        schema.object_or_interface(name)
     }
 }
 
@@ -517,14 +529,9 @@ fn execute_selection_set_to_map<'a>(
         }
     }
 
-    if errors.is_empty() && !result_map.is_empty() {
+    if errors.is_empty() {
         Ok(result_map)
     } else {
-        if errors.is_empty() {
-            errors.push(QueryExecutionError::EmptySelectionSet(
-                object_type.name.clone(),
-            ));
-        }
         Err(errors)
     }
 }
