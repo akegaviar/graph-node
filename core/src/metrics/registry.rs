@@ -137,7 +137,7 @@ impl MetricsRegistryTrait for MetricsRegistry {
         } else {
             let counter = match subgraph {
                 None => *self.new_counter(&name, &help)?,
-                Some(subgraph) => *self.new_subgraph_counter(name, help, subgraph)?,
+                Some(subgraph) => *self.new_deployment_counter(name, help, subgraph)?,
             };
             self.global_counters
                 .write()

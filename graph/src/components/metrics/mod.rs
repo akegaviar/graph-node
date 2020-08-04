@@ -36,7 +36,7 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         Ok(gauge)
     }
 
-    fn new_subgraph_gauge(
+    fn new_deployment_gauge(
         &self,
         name: &str,
         help: &str,
@@ -67,7 +67,7 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         Ok(gauges)
     }
 
-    fn new_subgraph_gauge_vec(
+    fn new_deployment_gauge_vec(
         &self,
         name: &str,
         help: &str,
@@ -94,7 +94,7 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         Ok(counter)
     }
 
-    fn new_subgraph_counter(
+    fn new_deployment_counter(
         &self,
         name: &str,
         help: &str,
@@ -125,7 +125,7 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         Ok(counters)
     }
 
-    fn new_subgraph_counter_vec(
+    fn new_deployment_counter_vec(
         &self,
         name: &str,
         help: &str,
@@ -145,7 +145,7 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         Ok(counters)
     }
 
-    fn new_subgraph_histogram(
+    fn new_deployment_histogram(
         &self,
         name: &str,
         help: &str,
@@ -183,7 +183,7 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         Ok(histograms)
     }
 
-    fn new_subgraph_histogram_vec(
+    fn new_deployment_histogram_vec(
         &self,
         name: &str,
         help: &str,
@@ -205,9 +205,5 @@ pub trait MetricsRegistry: Send + Sync + 'static {
         )?);
         self.register(name, histograms.clone());
         Ok(histograms)
-    }
-
-    fn subgraph_labels(&self, subgraph: &str) -> HashMap<String, String> {
-        labels! { String::from("subgraph") => String::from(subgraph), }
     }
 }

@@ -725,7 +725,7 @@ impl Store {
         self.with_conn(move |conn, cancel_handle| {
             registry
                 .global_counter(
-                    "subgraph_get_entity_conn_secs",
+                    "deployment_get_entity_conn_secs",
                     "total time spent getting an entity connection",
                     Some(subgraph.as_str()),
                 )
@@ -776,7 +776,7 @@ impl Store {
         };
         self.registry
             .global_counter(
-                "subgraph_get_entity_conn_secs",
+                "deployment_get_entity_conn_secs",
                 "total time spent getting an entity connection",
                 Some(subgraph.as_str()),
             )?
